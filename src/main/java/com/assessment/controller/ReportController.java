@@ -1,5 +1,6 @@
 package com.assessment.controller;
 
+import com.assessment.beans.OutputTransactions;
 import com.assessment.beans.ResultTransactions;
 import com.assessment.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,6 @@ import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -31,31 +31,31 @@ public class ReportController {
     }
 
     @GetMapping("/generatejsonreport/{reportDate}")
-    public @ResponseBody List<ResultTransactions> generateJsonReport(@PathVariable String reportDate) {
-    log.info("Received generateReport request for Date " + reportDate);
-        List<ResultTransactions> transactions=null;
-    try {
-        //  List<ResultTransactions> transactions =   transactionService.getTransaction();
-        transactions = transactionService.getTransactionDetailsByDate(reportDate);
-        log.info("Report Generated for Date ", reportDate);
-    }
-    catch(Exception ex) {
-        log.error("Exception while processing generatejsonReport" + ex.getMessage());
-        ex.printStackTrace();
-    }
-    return transactions;
+    public @ResponseBody
+    List<OutputTransactions> generateJsonReport(@PathVariable String reportDate) {
+        log.info("Received generateReport request for Date " + reportDate);
+        List<OutputTransactions> transactions = null;
+        try {
+            //  List<ResultTransactions> transactions =   transactionService.getTransaction();
+            transactions = transactionService.createReportByDate(reportDate);
+            log.info("Report Generated for Date ", reportDate);
+        } catch (Exception ex) {
+            log.error("Exception while processing generatejsonReport" + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return transactions;
     }
 
     @GetMapping("/generateallreports")
-    public @ResponseBody List<ResultTransactions> generateReport() {
-     //   log.info("Received generateReport request for Date ", reportDate);
-        List<ResultTransactions> transactions=null;
+    public @ResponseBody
+    List<ResultTransactions> generateReport() {
+        //   log.info("Received generateReport request for Date ", reportDate);
+        List<ResultTransactions> transactions = null;
         try {
-            transactions =   transactionService.getTransaction();
-          //  transactions = transactionService.getTransactionDetailsByDate(reportDate);
-           // log.info("Report Generated for Date ", reportDate);
-        }
-        catch(Exception ex) {
+            transactions = transactionService.getTransaction();
+            //  transactions = transactionService.createReportByDate(reportDate);
+            // log.info("Report Generated for Date ", reportDate);
+        } catch (Exception ex) {
             log.error("Exception while processing generatejsonReport" + ex.getMessage());
             ex.printStackTrace();
         }
@@ -64,30 +64,29 @@ public class ReportController {
 
     @GetMapping("/generatecsvreport/{reportDate}")
     public void generatecsvReport(HttpServletResponse response, @PathVariable String reportDate) {
-        log.info("Received generatecsvReport for date "+ reportDate);
+        log.info("Received generatecsvReport for date " + reportDate);
         try {
-            List<ResultTransactions> transactions = transactionService.getTransactionDetailsByDate(reportDate);
+            List<OutputTransactions> transactions = transactionService.createReportByDate(reportDate);
 
             response.setContentType("text/csv");
             ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
                     CsvPreference.STANDARD_PREFERENCE);
 
-            String[] header = {"clientType", "clientNumber", "accountNumber", "subAccountNumber",
-                    "exchangeCode", "productGroupCode", "symbol", "expirationDate", "totalTransactionAmount", "transactionDate"};
+            String[] header = {"clientInformation", "productInformation", "transactionAmount", "transactionDate"};
 
             csvWriter.writeHeader(header);
 
-            for (ResultTransactions singleTransaction : transactions) {
+            for (OutputTransactions singleTransaction : transactions) {
                 csvWriter.write(singleTransaction, header);
             }
 
             csvWriter.close();
             log.info("CSV Report generated");
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             log.error("Exception while processing generateCSVReport" + ex.getMessage());
             ex.printStackTrace();
         }
     }
+
 
 }

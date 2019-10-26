@@ -13,9 +13,8 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Integer> {
 
     @Query(value = "select clienttype,clientnumber,accountnumber,subaccountnumber,exchangecode,productgroupcode,symbol," +
-            " expirationdate, sum(quantitylong) - sum(quantityshort) as totalTransactionAmount, transactiondate from  transactionentity t \n" +
-            " where transactiondate = :date group by clienttype, productgroupcode", nativeQuery = true)
+            " expirationdate, sum(quantitylong) - sum(quantityshort) as totalTransactionAmount, transactiondate from  transactionentity \n" +
+            " where transactiondate = :date group by clienttype,clientnumber,accountnumber,subaccountnumber,exchangecode,productgroupcode,symbol,\n" +
+            "             expirationdate", nativeQuery = true)
     List<Object[]> findTransactionsByDate(@Param("date") LocalDate date);
-
-    //List<TransactionEntity> findTransactionsByDate(@Param("date") LocalDate date);
 }

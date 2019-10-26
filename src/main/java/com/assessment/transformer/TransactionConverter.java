@@ -6,13 +6,18 @@ import com.assessment.entities.TransactionEntity;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class TransactionConverter {
+
+    static String convertDateFormat(String dateinString) {
+        return dateinString.substring(0, 4) + "-" + dateinString.substring(4, 6) + "-" + dateinString.substring(6, 8);
+    }
 
     public TransactionEntity dtoToEntity(Transaction transactionDto) {
 
@@ -27,7 +32,6 @@ public class TransactionConverter {
                 transactionDto.getQuantityLong(),
                 transactionDto.getQuantityShort(),
                 LocalDate.parse(convertDateFormat(transactionDto.getTransactionDate())));
-        //Date.valueOf(convertDateFormat(transactionDto.getTransactionDate())));
     }
 
     public List<ResultTransactions> entityToDto(List<TransactionEntity> transactionEntity) {
@@ -62,13 +66,12 @@ public class TransactionConverter {
             transactionDto.setProductGroupCode((String) s[5]);
             transactionDto.setSymbol((String) s[6]);
             transactionDto.setTotalTransactionAmount((BigDecimal) s[8]);
-            transactionDto.setTransactionDate((java.sql.Date) s[9]);
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            String strDate = dateFormat.format(s[9]);
+            transactionDto.setTransactionDate(strDate);
             transactionList.add(transactionDto);
         });
 
         return transactionList;
     }
-   static String convertDateFormat(String dateinString) {
-     return dateinString.substring(0, 4) + "-" + dateinString.substring(4, 6) + "-" + dateinString.substring(6, 8);
-     }
 }

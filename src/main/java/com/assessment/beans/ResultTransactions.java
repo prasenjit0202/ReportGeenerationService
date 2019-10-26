@@ -1,7 +1,6 @@
 package com.assessment.beans;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class ResultTransactions {
 
@@ -13,6 +12,8 @@ public class ResultTransactions {
     private String productGroupCode;
     private String symbol;
     private String expirationDate;
+    private String transactionDate;
+    private BigDecimal totalTransactionAmount;
 
     public BigDecimal getTotalTransactionAmount() {
         return totalTransactionAmount;
@@ -21,10 +22,6 @@ public class ResultTransactions {
     public void setTotalTransactionAmount(BigDecimal totalTransactionAmount) {
         this.totalTransactionAmount = totalTransactionAmount;
     }
-
-
-    private java.sql.Date transactionDate;
-    private BigDecimal totalTransactionAmount;
 
     @Override
     public String toString() {
@@ -105,11 +102,11 @@ public class ResultTransactions {
         this.expirationDate = expirationDate;
     }
 
-    public java.sql.Date getTransactionDate() {
+    public String getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(java.sql.Date transactionDate) {
+    public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
     }
 

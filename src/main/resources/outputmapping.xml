@@ -1,0 +1,23 @@
+<beanio xmlns="http://www.beanio.org/2012/03">
+
+    <!-- 'format' identifies the type of stream -->
+    <stream name="transactionoutputstream" format="fixedlength">
+        <!-- 'class' binds the header record to a java.util.HashMap -->
+
+        <record name="resulttransaction" class="com.assessment.beans.ResultTransactions">
+            <!-- 'ignore' indicates this field is not bound to a bean property -->
+            <field name="clientType" position="0" length="4"/>
+            <field name="clientNumber" position="4" length="4"/>
+            <field name="accountNumber" position="8" length="4"/>
+            <field name="subAccountNumber" position="12" length="4"/>
+            <field name="exchangeCode" position="16" length="4"/>
+            <field name="productGroupCode" position="20" length="2"/>
+            <field name="symbol" position="22" length="6"/>
+            <field name="expirationDate" position="28" length="8"/>
+            <field name="totalTransactionAmount" position="36" length="10"/>
+            <field name="transactionDate" position="46" length="8"/>
+        </record>
+
+    </stream>
+</beanio>
+
