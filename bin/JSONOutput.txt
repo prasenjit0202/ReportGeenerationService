@@ -1,0 +1,9 @@
+-- For Date 20100820
+
+[{"clientInformation":"CL  123400020001","productInformation":"SGX FUNK    20100910","transactionAmount":-52,"transactionDate":" 20100820"},{"clientInformation":"CL  432100020001","productInformation":"SGX FUNK    20100910","transactionAmount":46,"transactionDate":" 20100820"}]
+
+
+
+-- For Date 20100819
+
+[{"clientInformation":"CL  123400030001","productInformation":"CME FUN1    20100910","transactionAmount":285,"transactionDate":" 20100819"},{"clientInformation":"CL  123400030001","productInformation":"CME FUNK.   20100910","transactionAmount":-215,"transactionDate":" 20100819"},{"clientInformation":"CL  432100030001","productInformation":"CME FUN1    20100910","transactionAmount":-79,"transactionDate":" 20100819"}]
