@@ -36,7 +36,6 @@ public class ReportController {
         log.info("Received generateReport request for Date " + reportDate);
         List<OutputTransactions> transactions = null;
         try {
-            //  List<ResultTransactions> transactions =   transactionService.getTransaction();
             transactions = transactionService.createReportByDate(reportDate);
             log.info("Report Generated for Date ", reportDate);
         } catch (Exception ex) {
@@ -49,12 +48,9 @@ public class ReportController {
     @GetMapping("/generateallreports")
     public @ResponseBody
     List<ResultTransactions> generateReport() {
-        //   log.info("Received generateReport request for Date ", reportDate);
         List<ResultTransactions> transactions = null;
         try {
             transactions = transactionService.getTransaction();
-            //  transactions = transactionService.createReportByDate(reportDate);
-            // log.info("Report Generated for Date ", reportDate);
         } catch (Exception ex) {
             log.error("Exception while processing generatejsonReport" + ex.getMessage());
             ex.printStackTrace();
